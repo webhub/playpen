@@ -1,0 +1,74 @@
+enum FamilyRef {
+    PARENT, SPOUSE, CHILD, SELF
+}
+
+entity Person {
+	firstName String,
+	lastName String,
+	email String,
+	phoneNumber String,
+	tin String,
+    birthDate Date,
+    ref FamilyRef
+}
+
+entity FileStatus {
+	status String,
+    childName String,
+    spouseFirstName String,
+    spouseLastName String,
+    spouseTin String
+}
+entity Income{
+    wage Long,
+    interest Long,
+    scholarship Long
+}
+
+entity Agi{
+    eduExpense Long,
+    healthSavings Long,
+    movingExpense Long
+}
+
+entity TaxReturn {
+	year Integer,
+	title String,
+	createdAt Instant,
+    lastUpdatedAt Instant
+}
+
+entity Credits{
+   foreignTaxCredit Long,
+   childCredit Long,
+   energyCredit Long
+}
+
+entity Payment{
+   withheld Long,
+   
+}
+
+entity Exemption{
+   extra Integer
+}
+
+relationship OneToMany{
+   Exemption{person} to Person
+}
+
+relationship OneToOne{
+    TaxReturn{person} to Person,
+    TaxReturn{FileStatus} to FileStatus,
+    TaxReturn{exempt} to Exemption,
+    TaxReturn{income} to Income,
+    TaxReturn{agi} to Agi,
+    TaxReturn{credits} to Credits
+}
+
+dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl
+// Set an angular suffix
+angularSuffix * with atax
